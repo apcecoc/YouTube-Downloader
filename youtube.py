@@ -15,8 +15,8 @@ __version__ = (1, 3, 0)
 # scope: hikka_min 1.2.10
 
 import aiohttp
+import os
 from telethon.tl.types import Message
-from telethon.utils import get_display_name
 from .. import loader, utils
 
 @loader.tds
@@ -135,6 +135,11 @@ class YouTubeDownloaderMod(loader.Module):
                                         file_path,
                                         caption=self.strings("video_success"),
                                     )
+
+                                    # Удаление файла после отправки
+                                    if os.path.exists(file_path):
+                                        os.remove(file_path)
+
                                     await message.delete()
                                 else:
                                     await utils.answer(message, self.strings("error"))
@@ -181,6 +186,11 @@ class YouTubeDownloaderMod(loader.Module):
                                         file_path,
                                         caption=self.strings("audio_success"),
                                     )
+
+                                    # Удаление файла после отправки
+                                    if os.path.exists(file_path):
+                                        os.remove(file_path)
+
                                     await message.delete()
                                 else:
                                     await utils.answer(message, self.strings("error"))
